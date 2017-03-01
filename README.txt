@@ -1,4 +1,4 @@
-README v0.0 / 01 JUNE 2015
+README v0.0 / 01 MARCH 2017
 
 # Bleeding Pineapple
 
@@ -33,8 +33,3 @@ Describe how to install your program. Be precise and give examples. Don't assume
 After having installed the software, the user may need to configure it. List configuration options and explain how and where to set them.
 
 
-
-
-## License
-
-This project is licensed under [insert license]. The license should be in a separate file called LICENSE, so don't explain it in detail within your documentation. Also, don't forget to specify licenses of third-party libraries and programs you use.
