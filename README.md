@@ -2,7 +2,7 @@ README v0.0 / 01 MARCH 2017
 
 # Bleeding Pineapple
 
-[![npm](https://img.shields.io/npm/v/github.svg)](https://www.npmjs.com/package/github)
+[![npm](https://www.python.org/)](https://www.python.org/)
 [![npm](https://img.shields.io/badge/gratipay-donate-yellow.svg)](https://gratipay.com/node-github/)
 
 
