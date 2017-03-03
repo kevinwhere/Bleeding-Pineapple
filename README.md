@@ -2,31 +2,23 @@ README v0.0 / 01 MARCH 2017
 
 # Bleeding Pineapple
 
-## Introduction
+[![npm](https://img.shields.io/npm/v/github.svg)](https://www.npmjs.com/package/github)
+<span class="badge-gratipay"><a href="https://gratipay.com/node-github/"><img src="https://img.shields.io/badge/gratipay-donate-yellow.svg" alt="Gratipay donate button" /></a></span>
 
 A Framework for Empirical Evaluation on Schedulability Tests for Real-Time Scheduling Algorithms
+
 
 ## Usage
 
 Provide a short code snippet (if applicable), or short usage instructions
 
-## Contributing
 
-Give instructions on how to participate in your project patches.
 
-## Help
-
-Explain which communication channels are available to request help. Communication channels with a proven track record are mailing lists, IRC channels, and forums. Also be sure to tell your more experienced users how and where to submit bugs or feature requests, possibly turning them into project participants.
-
-## Installation
 
 ### Software Requirements
 
 Python 2.7
 
-### Installation
-
-Describe how to install your program. Be precise and give examples. Don't assume your users know how to clone from my github repo. Keep in mind that some of your users may be completely unskilled in system administration or software development.
 
 ### Configuration
 
@@ -34,29 +26,15 @@ After having installed the software, the user may need to configure it. List con
 
 **NOTE: The `node-github` npm package is deprecated. You want the `github` npm package (see Installation).**
 
-# Node-github
 
-[![npm](https://img.shields.io/npm/v/github.svg)](https://www.npmjs.com/package/github)
-<span class="badge-gratipay"><a href="https://gratipay.com/node-github/"><img src="https://img.shields.io/badge/gratipay-donate-yellow.svg" alt="Gratipay donate button" /></a></span>
-
-A Node.js wrapper for GitHub API.
 
 ## Installation
-
-Install via npm.
-
-```bash
-$ npm install github
-```
-
-or
 
 Install via git clone
 
 ```bash
-$ git clone https://github.com/mikedeboer/node-github.git
-$ cd node-github
-$ npm install
+$ git clone https://kevinwhere@bitbucket.org/kevinwhere/bleeding-pineapple.git
+$ cd bleeding-pineapple
 ```
 
 ## Documentation
