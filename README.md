@@ -3,7 +3,7 @@ README v0.0 / 01 MARCH 2017
 # Bleeding Pineapple
 
 [![PyPI](https://img.shields.io/pypi/pyversions/Django.svg)]()
-[![npm](https://img.shields.io/badge/gratipay-donate-yellow.svg)](https://gratipay.com/node-github/)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
 
 A Framework for Empirical Evaluation on Schedulability Tests for Real-Time Scheduling Algorithms
