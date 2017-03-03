@@ -40,8 +40,7 @@ $ cd bleeding-pineapple
 
 ## Documentation
 
-Client API: [https://mikedeboer.github.io/node-github/](https://mikedeboer.github.io/node-github/)  
-GitHub API: [https://developer.github.com/v3/](https://developer.github.com/v3/)
+Bitbucket Wiki: [https://bitbucket.org/kevinwhere/bleeding-pineapple/wiki/Home](https://bitbucket.org/kevinwhere/bleeding-pineapple/wiki/Home)  
 
 ## Example
 
