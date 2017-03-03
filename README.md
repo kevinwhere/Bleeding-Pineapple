@@ -17,7 +17,7 @@ Provide a short code snippet (if applicable), or short usage instructions
 
 ### Software Requirements
 
-Python 2.7
+`python` and `python-matplotlib`
 
 
 ### Configuration
