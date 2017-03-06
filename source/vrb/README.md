@@ -1,12 +1,12 @@
-README v0.0 / 01 MARCH 2017
+README v1.0 / 06 MARCH 2017
 
 # Multi-Mode Tasks Generation
 
 We first generated a set of sporadic tasks. The cardinality of the task set was 10.
 The UUniFast method was adopted to generate a set of utilization values with the given goal.
 We use the approach suggested by Emberson et al.~\cite{emberson2010techniques} to generate the task periods according to the **exponential distribution**.
- The distribution of periods is within two orders of magnitude, i.e., $10$ms-$1000$ms. Task relative deadlines are implicit, i.e., $D_i=T_i$. 
- The worst-case execution time was computed accordingly, i.e. $C_{i}=T_iU_i$.
+ The distribution of periods is within two orders of magnitude, i.e., $10$ms-$1000$ms. Task relative deadlines are implicit, i.e., $D<sub>i<sub>=T<sub>i<sub>$. 
+ The worst-case execution time was computed accordingly, i.e. $C<sub>i<sub>=T<sub>i<sub>U<sub>i<sub>$.
  We converted a proportion $p$ of tasks to multi-mode tasks:
 
 * A multi-mode task has $M$ execution modes
