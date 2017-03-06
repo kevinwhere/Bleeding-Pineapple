@@ -180,19 +180,26 @@ $ > testAuth.json
 For using bluebird, see [here](https://github.com/mikedeboer/node-github/blob/master/examples/testPromise.js).  
 For using Q, see [here](https://github.com/mikedeboer/node-github/blob/master/examples/testPromiseQ.js).
 
-## Tests
+## (Very short)tutorial 
 
-Run all tests
-
-```bash
-$ npm test
-```
-
-Or run a specific test
+Run schedulability tests
 
 ```bash
-$ npm test test/issuesTest.js
+$ python vrb.py
 ```
+
+Plot the results
+
+1. Change to the directory in which vrb-plot.py is put
+```bash
+$ cd plot
+```
+2. plot the result
+```bash
+$ python vrb-plot.py
+```
+
+
 
 ## Preview APIs
 

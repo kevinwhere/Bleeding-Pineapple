@@ -66,25 +66,10 @@ for ischeme in schemes:
 								numfail+=1
 						elif ischeme == 'DT-FPT':
 							if scheme.Audsley(tasks,ischeme) == False:
-								numfail+=1
-						elif ischeme == 'OUR':
-							if scheme.GDM(tasks,ischeme,int(imode)) == False:
-								numfail+=1
-						elif ischeme == 'OURx':
-							if scheme.GDM(tasks,ischeme,int(imode)) == False:
-								numfail+=1
-						elif ischeme == 'LOAD':
-							if scheme.GDM(tasks,ischeme,int(imode)) == False:
-								numfail+=1
-						elif ischeme == 'Guan':
-							if scheme.GDM(tasks,ischeme,int(imode)) == False:
-								numfail+=1
-						elif ischeme == 'BAK':
-							if scheme.GDM(tasks,ischeme,int(imode)) == False:
-								numfail+=1
+								numfail+=1						
 						else:
-							if scheme.Audsley(tasks,ischeme,int(imode)) == False:
-								numfail+=1
+							print 'Undefined scheme'
+							sys.exit(1)
 				
 					acceptanceRatio=1-(numfail/totBucket)
 					print "acceptanceRatio:",acceptanceRatio

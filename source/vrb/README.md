@@ -2,33 +2,24 @@ README v1.0 / 06 MARCH 2017
 
 # Multi-Mode Tasks Generation
 
-We first generated a set of sporadic tasks. The cardinality of the task set was 10.
+We first generated a set of sporadic tasks. 
 The UUniFast method was adopted to generate a set of utilization values with the given goal.
-We use the approach suggested by Emberson et al.~\cite{emberson2010techniques} to generate the task periods according to the **exponential distribution**.
- The distribution of periods is within two orders of magnitude, i.e., $10$ms-$1000$ms. Task relative deadlines are implicit, i.e., D~i~=T~i~$. 
- The worst-case execution time was computed accordingly, i.e. $C~i~=T~i~U~i~$. H~2~O
- We converted a proportion $p$ of tasks to multi-mode tasks:
+The task periods were generated according to the **exponential distribution**.
+ The distribution of periods is by default within two orders of magnitude, i.e., $10$ms-$1000$ms. Task relative deadlines are implicit, i.e., $D_i=T_i$. The worst-case execution time was computed accordingly, i.e. $C_i~=T_iU_i$. We converted a proportion $p$ of tasks to multi-mode tasks:
 
 * A multi-mode task has $M$ execution modes
 ```python
 for j in range(numMode):
 ```
 * The generated sporadic task triplet $(C_i,T_i,D_i)$ was assigned to the setting of task mode $\tau_i^1$.
-* We use a scaling factor to assign the parameters of the other modes, i.e., $C_i^{m+1}=1.5C_i^{m}$ and 
-    $T_i^{m+1}=1.5T_i^{m}$. 
-* We randomly choose a mode to have the largest utilization. 
+* We use a scaling factor $s$ to assign the parameters of the other modes, i.e., $C_i^{m+1}=s^{m-1}C_i^{m}$ and $T_i^{m+1}=s^{m-1}T_i^{m}$. 
 ```python
-iMaxU=random.randrange(numMode)
+p=iStask['period']*math.pow(scalefac, j)
+c=iStask['period']*iStask['utilization']*math.pow(scalefac, j) 
 ```
-* The worst-case execution times of the remaining modes 
-    were adjusted by multiplying them by uniform random 
-    values in the range [minCtune,maxCtune].
-```python
-def wiki_rocks(text):
-    p=iStask['period']*math.pow(scalefac, j)
-    c=iStask['period']*iStask['utilization']*math.pow(scalefac, j) 
-```         
-#tune C for non- MaxU by multiplying them by uniform random values in the range [minCtune,maxCtune]
+* We randomly choose a mode to have the largest utilization. 
+* The worst-case execution times of the remaining modes were adjusted by multiplying them by uniform random values in the range [minCtune,maxCtune].
+```python         
 if j != iMaxU:      
     c=c*random.uniform(minCtune,maxCtune);
 ```
@@ -37,4 +28,59 @@ if j != iMaxU:
 s=math.ceil(p)/p
 pair['period']=math.ceil(p) 
 pair['execution']=c*s
+```
+
+# Schedulability Tests for Multi-Mode Tasks 
+
+Available tests are listed as follows:
+
+* Demand-based Test under FPT (DT-FPT) `DTest(k,tasks,mode,priortyassigned)`: the response-time analysis(RTA)-based approach using **dynamic programming (DP)** under FPT presented in Section III.D.
+
+**NOTE: the RTA-based approach can only be used when the critical instant exists.**
+
+* FPTVRBL2 `VRBL2(mode,Tasks)`: the utilization-based test under FPT based on Eq. (7) and (8) in~\cite{davis2008response,DBLP:conf/rtas/DavisFPS14}
+* Quadratic Test `RMQT(tasks,scheme)`: Theorem~\ref{theorem:beta-utilization-bound}.
+
+
+## Dynamic Programming 
+a recursive function, even though we started with a recursive solution to this problem.
+
+
+# Optimal Priority Assignment
+Checking the FPT feasibility of a multi-mode task set was achieved by using the **Audsley's Algorithm**, a.k.a. **Optimal Priority Assignment(OPA)**. The OPA for mode-level fixed-priority scheduling is attached as follows (the one for task-level FP scheduling is also similar): 
+
+```python
+def modeAudsley(tasks,scheme):
+	num_modes=0
+	## to know how many priority levels we need to decide
+	for itask in tasks:
+		num_modes+=len(itask)
+		## put an attribute for each mode used as an indicator for whether or not its priority level is assigned
+		for imode in itask:
+			imode['ifassigned']=False		
+	## assign priority levels to modes, from the lowest to the highest
+	for plevel in range(num_modes):
+	
+		canAssign=0
+		for i in range(len(tasks)):
+			primeTasks=tasks[:i]+tasks[i+1:]		
+
+			for imode in tasks[i]:
+				##ignore modes whose priority levels have been decided
+				if imode['ifassigned']==True:
+					continue
+				## checking if this mode can be assigned to this priority level by QT test
+				if tests.modeQT(imode,primeTasks):							
+					continue
+				else:					
+					imode['ifassigned']=True
+					canAssign=1
+					break				
+			## greedily assign the first mode feasible to this priority level
+			if canAssign==1:
+				break
+		## if none of the modes can be assigned at this priority level, return unscheduable
+		if canAssign==0:
+			return False
+	return True
 ```
