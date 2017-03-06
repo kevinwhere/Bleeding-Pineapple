@@ -9,39 +9,6 @@ USet=[]
 PSet=[]
 VRBSet=[]
 
-def parameterRead():
-	global gscaleFac, uTotal, numTasks, numMode, xMode, numLog, ofile,vRatio
-	try:
-		opts, args = getopt.getopt(sys.argv[1:],"hi:u:n:f:m:x:p:o:v:")
-	except getopt.GetoptError:
-		print 'test.py -i <seed> -u <totalutilzation> -if <scalefactor>'
-		sys.exit(2)
-	print opts, args
-	
-	for opt, arg in opts:
-		if opt == '-h':
-			print 'test.py -s <randoseed> -u <totalutilzation> -f <scalefactor>'
-			sys.exit()
-		elif opt in ("-u"):
-			uTotal = float(float(arg)/100)
-		elif opt in ("-i"):
-			random.seed(int(arg))
-		elif opt in ("-n", "--num"):
-			numTasks = int(arg)
-		elif opt in ("-f", "--scalefacor"):
-			gscaleFac = float(arg)
-		elif opt in ("-m", "--mode"):
-			numMode = int(arg)
-		elif opt in ("-x", "--xmode"):
-			xMode = int(arg)
-		elif opt in ("-p", "--numLog"):
-			numLog = float(arg)
-		elif opt in ("-v", "--v"):
-			vRatio = float(arg)
-		elif opt in ("-o", "--output"):
-			ofile = arg
-		else:
-			assert False, "unhandled option"
    	
    
 
@@ -54,24 +21,7 @@ def UUniFast(n,U_avg):
 		sumU=nextSumU
 	USet.append(sumU)
 
-def UUniFast_Discard(n,U_avg):	
-	while 1:
-		sumU=U_avg
-		for i in range(n-1):
-			nextSumU=sumU*math.pow(random.random(), 1/(n-i))		
-			USet.append(sumU-nextSumU)
-			sumU=nextSumU
-		USet.append(sumU)
-
-		if max(USet) < 1:			
-			break
-		del USet[:]
-
-def UniDist(n,U_min,U_max):
-	for i in range(n-1):
-		uBkt=random.uniform(U_min, U_max)
-		taskSet.append(uBkt)
-def	CSet_generate(Pmin,numLog):
+def	SetGenerate(Pmin,numLog):
 	j=0
 	for i in USet:
 		thN=j%numLog
@@ -81,22 +31,29 @@ def	CSet_generate(Pmin,numLog):
 		pair['utilization']=i
 		PSet.append(pair)
 		j=j+1;
+
 maxCtune=1
 minCtune=0.75
-def	VRBSet_generate(numMode,vRatio,scalefac):
+
+
+def	VRBSetGenerate(numMode,vRatio,scalefac):
+	## a proportion of tasks is convented to multi-mode tasks	
 	numV=int(len(PSet)*vRatio)
 	i=0
-	for iStask in PSet:		
+	for iStask in PSet:
 		if i< numV:
-
+			## one of the modes is chosen as the baseline (the one with the maximum utilization) to adjust the other modes 
 			iMaxU=random.randrange(numMode)
 			modes=[]
 			for j in range(numMode):
+				## scale the period and the execution according to the scalefactor 
 				p=iStask['period']*math.pow(scalefac, j)
 				c=iStask['period']*iStask['utilization']*math.pow(scalefac, j)			
-				#tune C for non- MaxU 
+				#tune C for non- MaxU by multiplying them by uniform random values in the range [minCtune,maxCtune]
 				if j != iMaxU:		
 					c=c*random.uniform(minCtune,maxCtune);
+
+				## discrete time model
 				s=math.ceil(p)/p
 				pair={}
 				pair['period']=math.ceil(p) ## 
@@ -108,6 +65,7 @@ def	VRBSet_generate(numMode,vRatio,scalefac):
 			modes=[]
 			p=iStask['period']
 			c=iStask['period']*iStask['utilization']
+			## discrete time model
 			s=math.ceil(p)/p
 			pair={}
 			pair['period']=math.ceil(p) ## 
@@ -122,16 +80,16 @@ def init():
 	VRBSet=[]
 
 
-def taskGeneration_p(numTasks,uTotal,Pmin=1,numMode=5,vRatio=0.5,gscaleFac=1.5,numLog=2,seed=1):
+def TaskGeneration(numTasks,uTotal,Pmin=1,numMode=5,vRatio=0.5,gscaleFac=1.5,numLog=2,seed=1):
+	## Initialize internal state of the random number generator
 	random.seed(seed)
-	init()
-	
+	init()	
 
-	#print "N:",numTasks,"U:",uTotal,"SSRatio:",vRatio, "SSType=",sstype,"Seed: ",seed,
+	## the UUniFast method is adopted to generate a set of utilization values with the given goal
 	UUniFast(numTasks,uTotal)
-
-	CSet_generate(Pmin,numLog)
-
-	VRBSet_generate(numMode,vRatio,gscaleFac)
+	## generate the task periods according to the log distribution
+	SetGenerate(Pmin,numLog)
+	## converted sporadic tasks to multi-mode tasks
+	VRBSetGenerate(numMode,vRatio,gscaleFac)
 	return VRBSet
 	

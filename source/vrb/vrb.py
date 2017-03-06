@@ -44,31 +44,10 @@ for ischeme in schemes:
 
 						percentageU=((u+UStart)*UStep/100)
 						if percentageU == 0:
-							continue		
-						#a = datetime.now()
+							continue						
 
-						tasks=tg.taskGeneration_p(tasksinBkt,percentageU,seed=i,numLog=int(iplog),numMode=int(imode))
-						#print tasks
-						#b = datetime.now()
-
-						#t1=b-a
-						#print "TG time (ms):", t1.microseconds,
-						# fi = open('taskset', "r")
-						# tasks= json.load(fi)
-						# fi.close()
-						# for itask in tasks:
-						# 	itask['execution']=itask['execution']*int(issprop)/10
-						## sort by increasing deadlines
-						#sortedTasks=sorted(tasks, key=lambda item:item['deadline']) 
-						#print sortedTasks
-						# u=0
-						# for i in sortedTasks:
-						# 	u+=i['execution']/i['period']
-						# 	print i
-						# print u
-						#print sortedTasks
-						#if scheme.RB(sortedTasks,ischeme) == False:
-						#c = datetime.now()
+						tasks=tg.TaskGeneration(tasksinBkt,percentageU,seed=i,numLog=int(iplog),numMode=int(imode))
+						
 
 						if ischeme == 'QT-OPA':
 							if scheme.modeAudsley(tasks,ischeme) == False:
@@ -106,13 +85,7 @@ for ischeme in schemes:
 						else:
 							if scheme.Audsley(tasks,ischeme,int(imode)) == False:
 								numfail+=1
-
-						#d = datetime.now()
-
-						#t2=d-c
-						#print "analysis time (ms):", t2.microseconds
-
-					
+				
 					acceptanceRatio=1-(numfail/totBucket)
 					print "acceptanceRatio:",acceptanceRatio
 					y[u]=acceptanceRatio
@@ -122,6 +95,4 @@ for ischeme in schemes:
 				plotfile=prefixdata+"/m/"+imode+"/"+ischeme
 				np.save(plotfile,np.array([x,y]))
 		
-			
-		
-			
+	
