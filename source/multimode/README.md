@@ -2,10 +2,10 @@ README v1.0 / 06 MARCH 2017
 
 # Multi-Mode Tasks Generation
 
-We first generated a set of sporadic tasks. 
-The UUniFast method was adopted to generate a set of utilization values with the given goal.
-The task periods were generated according to the **exponential distribution**.
- The distribution of periods is by default within two orders of magnitude, i.e., $10$ms-$1000$ms. Task relative deadlines are implicit, i.e., $D_i=T_i$. The worst-case execution time was computed accordingly, i.e. $C_i~=T_iU_i$. We converted a proportion $p$ of tasks to multi-mode tasks:
+We first generate a set of sporadic tasks. 
+The UUniFast method is adopted to generate a set of utilization values with the given goal.
+The task periods are generated according to the **exponential distribution**.
+ The distribution of periods is by default within two orders of magnitude, i.e., $10$ms-$1000$ms. Task relative deadlines are implicit, i.e., $D_i=T_i$. The worst-case execution time is computed accordingly, i.e. $C_i~=T_iU_i$. We then convert a proportion $p$ of tasks to multi-mode tasks and the details are below:
 
 * A multi-mode task has $M$ execution modes
 ```python
@@ -18,12 +18,12 @@ p=iStask['period']*math.pow(scalefac, j)
 c=iStask['period']*iStask['utilization']*math.pow(scalefac, j) 
 ```
 * We randomly choose a mode to have the largest utilization. 
-* The worst-case execution times of the remaining modes were adjusted by multiplying them by uniform random values in the range [minCtune,maxCtune].
+* The worst-case execution times of the remaining modes are adjusted by multiplying them by uniform random values in the range [minCtune,maxCtune].
 ```python         
 if j != iMaxU:      
     c=c*random.uniform(minCtune,maxCtune);
 ```
-* Ensure the discrete time model
+* To ensure the discrete time model, we here apply a correction factor on both the generated period and execution time.
 ```python
 s=math.ceil(p)/p
 pair['period']=math.ceil(p) 
@@ -47,7 +47,7 @@ a recursive function, even though we started with a recursive solution to this p
 
 
 # Optimal Priority Assignment
-Checking the FPT feasibility of a multi-mode task set was achieved by using the **Audsley's Algorithm**, a.k.a. **Optimal Priority Assignment(OPA)**. The OPA for mode-level fixed-priority scheduling is attached as follows (the one for task-level FP scheduling is also similar): 
+Checking the FPT feasibility of a multi-mode task set was achieved by using the **Audsley's Algorithm**, a.k.a. **Optimal Priority Assignment (OPA)**. The OPA for mode-level fixed-priority scheduling is attached as follows (the one for task-level FP scheduling is also similar): 
 
 ```python
 def modeAudsley(tasks,scheme):

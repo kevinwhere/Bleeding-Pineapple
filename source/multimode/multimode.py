@@ -4,7 +4,9 @@ import math
 import sys, getopt
 import json
 import numpy as np
-import tg,tests,OPA
+import package.tests as tests
+import package.OPA as OPA
+import package.tg as tg
 from datetime import datetime, timedelta
 
 totBucket=100

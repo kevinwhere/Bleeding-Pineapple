@@ -6,20 +6,22 @@ README v0.0 / 01 MARCH 2017
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
 
-A Framework for Empirical Evaluation on Schedulability Tests for Real-Time Scheduling Algorithms
+BleedingPineapple is a Framework for empirical evaluation on schedulability tests for real-time scheduling algorithms.
 
 
-## Usage
-
-Provide a short code snippet (if applicable), or short usage instructions
-
+## Usage Overview
 
 
 
 ### Software Requirements
 
-`python` and `python-matplotlib`
+`python`  2.7 (or later) 
 
+`numpy` 1.7.1 (or later) (download [numpy](http://www.numpy.org/ ""))
+
+`scipy` (download [scipy](http://www.scipy.org/install.html ""))
+
+`python-matplotlib` (download [python-matplotlib](http://matplotlib.org/users/installing.html ""))
 
 ### Configuration
 
@@ -189,23 +191,23 @@ For using Q, see [here](https://github.com/mikedeboer/node-github/blob/master/ex
 Enter source folder and select topic
 
 ```bash
-$ cd source/vrb
+$ cd source/multimode
 ```
 Run schedulability tests
 
 ```bash
-$ python vrb.py
+$ python multimode.py
 ```
 
 Plot the results
 
-1. Change to the directory in which `vrb-plot.py` is put
+1. Change to the directory in which `multimode-plot.py` is put
 ```bash
 $ cd plot
 ```
 2. plot the result
 ```bash
-$ python vrb-plot.py
+$ python multimode-plot.py
 ```
 
 
