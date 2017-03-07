@@ -1,8 +1,6 @@
 from __future__ import division
-import random
 import math
-import json
-import sys, getopt
+import sys
 maxmaxP=[]
 rfile=""
 
@@ -104,6 +102,7 @@ def RMQT(tasks,scheme):
 				return False
 	return True
 def QT(mode,HPTasks):
+
 	Tn=mode['period']
 	taskB=[]
 	for itask in HPTasks:

@@ -26,14 +26,13 @@ def modeAudsley(tasks,scheme):
 				if imode['ifassigned']==True:
 					continue
 
-
 				## checking if this mode can be assigned to this priority level by QT test
 				if tests.modeQT(imode,primeTasks):							
-					continue
-				else:					
 					imode['ifassigned']=True
 					canAssign=1
 					break
+				else:
+					continue
 				
 			## greedily assign the first mode feasible to this priority level
 			if canAssign==1:

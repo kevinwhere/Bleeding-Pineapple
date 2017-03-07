@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 modes=['5','8','10']
 periodlogs=['1','2','3']
-schemes=['QT-FPT','QT-OPT','QT-RM']
+schemes=['QT-FPT','QT-RM','QT-OPA']
 figlabel=['a','b','c','d','e','f','g','h','i']
 prefix="data/"
 
@@ -49,6 +49,13 @@ for iprocessor in modes:
 				#data=np.load(ifile)
 				#x=data[0,:]/100
 				#y=data[1,:]
+				name=schemes[j]
+				if name == 'QT-FPT':
+					name='QT-FPT-OPA'
+				elif  name == 'QT-RM':
+					name='QT-FPM-RM'
+				elif  name == 'QT-OPA':
+					name='QT-FPM-OPA'
 				ax.plot(x, y,
  					'-', 
  					color=colors[j],
@@ -56,7 +63,7 @@ for iprocessor in modes:
  					markersize=8,
  					markevery=1,
  					fillstyle='none',
- 					label=schemes[j], 					
+ 					label=name, 					
  					linewidth=1.0, clip_on=False)
 				if i==1:
 					ax.legend(bbox_to_anchor=(1.6, 1.4),

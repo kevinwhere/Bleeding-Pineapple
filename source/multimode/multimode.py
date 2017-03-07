@@ -1,13 +1,8 @@
 from __future__ import division
-import random
-import math
-import sys, getopt
-import json
+import sys
 import numpy as np
-import package.tests as tests
-import package.OPA as OPA
-import package.tg as tg
-from datetime import datetime, timedelta
+from package import tg, OPA, tests
+#from datetime import datetime, timedelta
 
 totBucket=100
 tasksinBkt=10
@@ -22,7 +17,7 @@ prefixdata="plot/data"
 
 ###### schemes=['DT-FPT','VRBL2-FPT','QT-FPT','OUR-LP','Guan']
 
-schemes=['DP-OPA']
+schemes=['QT-RM']
 ######  modes=['2','4','8']
 modes=['5','8','10']
 ######periodlogs=['1','2','3']
@@ -52,9 +47,6 @@ for ischeme in schemes:
 						
 
 						if ischeme == 'QT-OPA':
-							if OPA.modeAudsley(tasks,ischeme) == False:
-								numfail+=1
-						if ischeme == 'DP-OPA':
 							if OPA.modeAudsley(tasks,ischeme) == False:
 								numfail+=1
 						elif ischeme == 'QT-RM':

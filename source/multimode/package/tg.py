@@ -1,8 +1,7 @@
 from __future__ import division
 import random
 import math
-import sys, getopt
-import json
+
 
 
 USet=[]
