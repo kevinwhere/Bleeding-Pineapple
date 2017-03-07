@@ -31,12 +31,16 @@ After having installed the software, the user may need to configure it. List con
 
 ## Installation
 
-Install via git clone
+Install via `git clone`
 
 ```bash
 $ git clone https://kevinwhere@bitbucket.org/kevinwhere/bleeding-pineapple.git
 $ cd bleeding-pineapple
 ```
+
+or from `pip`
+
+TODO
 
 ## Documentation
 
@@ -182,6 +186,11 @@ For using Q, see [here](https://github.com/mikedeboer/node-github/blob/master/ex
 
 ## (Very short)tutorial 
 
+Enter source folder and select topic
+
+```bash
+$ cd source/vrb
+```
 Run schedulability tests
 
 ```bash
@@ -190,7 +199,7 @@ $ python vrb.py
 
 Plot the results
 
-1. Change to the directory in which vrb-plot.py is put
+1. Change to the directory in which `vrb-plot.py` is put
 ```bash
 $ cd plot
 ```

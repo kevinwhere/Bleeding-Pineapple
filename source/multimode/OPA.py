@@ -2,6 +2,7 @@ from __future__ import division
 import random
 import math
 import tests
+
 def modeAudsley(tasks,scheme):
 
 	## to know how many priority levels we need to decide
@@ -25,23 +26,15 @@ def modeAudsley(tasks,scheme):
 				if imode['ifassigned']==True:
 					continue
 
-				if scheme == 'QT-OPA':
-					## checking if this mode can be assigned to this priority level by QT test
-					if tests.modeQT(imode,primeTasks):							
-						continue
-					else:					
-						imode['ifassigned']=True
-						canAssign=1
-						break
-				elif scheme == 'DP-OPA':
-					if tests.vrbDP(imode,primeTasks) == False:							
-						continue
-					else:
-						imode['ifassigned']=True
-						canAssign=1
-						break
-				else:
-					sys.exit(1)
+
+				## checking if this mode can be assigned to this priority level by QT test
+				if tests.modeQT(imode,primeTasks):							
+					continue
+				else:					
+					imode['ifassigned']=True
+					canAssign=1
+					break
+				
 			## greedily assign the first mode feasible to this priority level
 			if canAssign==1:
 				break

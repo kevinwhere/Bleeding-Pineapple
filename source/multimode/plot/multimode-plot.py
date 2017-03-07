@@ -5,9 +5,6 @@ from __future__ import division
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
-import itertools
-from matplotlib import rcParams
-
 
 
 modes=['5','8','10']

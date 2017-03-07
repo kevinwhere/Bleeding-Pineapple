@@ -4,7 +4,7 @@ import math
 import sys, getopt
 import json
 import numpy as np
-import tg,scheme
+import tg,tests,OPA
 from datetime import datetime, timedelta
 
 totBucket=100
@@ -50,22 +50,22 @@ for ischeme in schemes:
 						
 
 						if ischeme == 'QT-OPA':
-							if scheme.modeAudsley(tasks,ischeme) == False:
+							if OPA.modeAudsley(tasks,ischeme) == False:
 								numfail+=1
 						if ischeme == 'DP-OPA':
-							if scheme.modeAudsley(tasks,ischeme) == False:
+							if OPA.modeAudsley(tasks,ischeme) == False:
 								numfail+=1
 						elif ischeme == 'QT-RM':
-							if scheme.RMQT(tasks,ischeme) == False:
+							if tests.RMQT(tasks,ischeme) == False:
 								numfail+=1
 						elif ischeme == 'QT-FPT':
-							if scheme.Audsley(tasks,ischeme) == False:
+							if OPA.Audsley(tasks,ischeme) == False:
 								numfail+=1
 						elif ischeme == 'VRBL2-FPT':
-							if scheme.Audsley(tasks,ischeme) == False:
+							if OPA.Audsley(tasks,ischeme) == False:
 								numfail+=1
 						elif ischeme == 'DT-FPT':
-							if scheme.Audsley(tasks,ischeme) == False:
+							if OPA.Audsley(tasks,ischeme) == False:
 								numfail+=1						
 						else:
 							print 'Undefined scheme'
