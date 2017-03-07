@@ -1,4 +1,4 @@
-README v1.0 / 06 MARCH 2017
+README v1.0 / 07 MARCH 2017
 
 # Multi-Mode Tasks Generation
 
@@ -30,21 +30,77 @@ pair['period']=math.ceil(p)
 pair['execution']=c*s
 ```
 
+## Data Structures
+*list*
+We use data type *dictionary* built into Python to decribe modes.
+
+| Keyword              		| Meaning                                     |
+| -------------------     | -----------------------------------------------       |
+| period           | the period/inter-arrival time of this mode             |
+| execution           | the worst-case execution time of this mode             |
+
+**NOTE: we implicitly assume implicit deadlines here, so we don't need deadlines to be specified. Alternaively, one can add deadline as keyword to decribe deadlines.**
+
+### Example 
+```python
+for itask in tasks:			
+	print itask
+```
+```bash
+[{'execution': 0.0054703680453322403, 'period': 2.0}, {'execution': 0.0049247204918443253, 'period': 2.0}, {'execution': 0.0076162508284702349, 'period': 3.0}, {'execution': 0.012200111224485971, 'period': 4.0}, {'execution': 0.014841495809564743, 'period': 6.0}]
+```
+```python
+for itask in tasks:	
+	for imode in itask:
+		print imode['period']
+```
+```bash
+2.0
+2.0
+3.0
+4.0
+6.0
+```
 # Schedulability Tests for Multi-Mode Tasks 
 
-Available tests are listed as follows:
+Available tests are below:
 
-* Demand-based Test under FPT (DT-FPT) `DTest(k,tasks,mode,priortyassigned)`: the response-time analysis(RTA)-based approach using **dynamic programming (DP)** under FPT presented in Section III.D.
+* Demand-based Test under FPT (DT-FPT) `DTest(k,tasks,mode,priortyassigned)`: the response-time analysis(RTA)-based approach using **dynamic programming (DP)** under FPT presented in *Huang and Chen. "Techniques for Schedulability Analysis in Mode Change Systems under Fixed-Priority Scheduling." In RTCSA2015*, see [here](http://ls12-www.cs.tu-dortmund.de/daes/media/documents/publications/downloads/polynomial-mode-change.pdf), or *Robert I. Davis et al. "Schedulability tests for tasks with Variable Rate-dependent Behaviour under fixed priority scheduling."*
 
-**NOTE: the RTA-based approach can only be used when the critical instant exists.**
+* FPTVRBL2 `VRBL2(mode,Tasks)`: the utilization-based test under FPT based on Eq. (7) and (8) in *Robert I. Davis et al. "Schedulability tests for tasks with Variable Rate-dependent Behaviour under fixed priority scheduling."*
+* Quadratic Test for fixed-priority task-level `QT(mode,HPTasks)`: Theorem 1 presented in *Huang and Chen. "Techniques for Schedulability Analysis in Mode Change Systems under Fixed-Priority Scheduling." In RTCSA2015*, see [here](http://ls12-www.cs.tu-dortmund.de/daes/media/documents/publications/downloads/polynomial-mode-change.pdf)
+* Quadratic Test for fixed-priority mode-level `modeQT(mode,tasks)`: Theorem 4 presented in *Huang and Chen. "Techniques for Schedulability Analysis in Mode Change Systems under Fixed-Priority Scheduling." In RTCSA2015*, see [here](http://ls12-www.cs.tu-dortmund.de/daes/media/documents/publications/downloads/polynomial-mode-change.pdf)
 
-* FPTVRBL2 `VRBL2(mode,Tasks)`: the utilization-based test under FPT based on Eq. (7) and (8) in~\cite{davis2008response,DBLP:conf/rtas/DavisFPS14}
-* Quadratic Test `RMQT(tasks,scheme)`: Theorem~\ref{theorem:beta-utilization-bound}.
+**NOTE: the RTA-based approach can only be used when the critical instant exists, i.e. under the FPT case.**
 
 
 ## Dynamic Programming 
-a recursive function, even though we started with a recursive solution to this problem.
+Suppose we are given a weight limit. 
+```python
+def dp_recursive(t,dpTB,dirtTB,incM,idptask,tasks):
+	choice=[]
 
+	if t ==0:
+		dirtTB[0]=0
+		dpTB[t]=0
+
+	if dirtTB[t]==0:
+		return dpTB[t]
+
+	for i in range(incM):
+		imode=tasks[idptask][i]
+		if imode['period']<=t:
+			## dp table look one time unit behind when float
+			## safe
+			choice.append(dp_recursive(t-int(imode['period']),dpTB,dirtTB,incM,idptask,tasks)+imode['execution'])
+		else:
+			choice.append(0)
+
+		dirtTB[t]=0
+		dpTB[t]=max(choice)
+	return dpTB[t]
+```
+The bulk of the work in this function is done by the loop that starts on `for i in range(incM):`.
 
 # Optimal Priority Assignment
 Checking the FPT feasibility of a multi-mode task set was achieved by using the **Audsley's Algorithm**, a.k.a. **Optimal Priority Assignment (OPA)**. Its source code for mode-level fixed-priority scheduling is attached below (the one for task-level FP scheduling is also similar): 

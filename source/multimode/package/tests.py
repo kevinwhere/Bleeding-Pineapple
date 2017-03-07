@@ -188,7 +188,7 @@ def dp_recursive(t,dpTB,dirtTB,incM,idptask,tasks):
 		dpTB[t]=max(choice)
 	return dpTB[t]
 def countInt(idptask,primeTasks,Tn):
-	#print "he",primeTasks[idptask]
+	
 	if len(primeTasks[idptask]) == 0:
 	 	countI=0
 	elif len(primeTasks[idptask]) == 1:
@@ -204,8 +204,6 @@ def countInt(idptask,primeTasks,Tn):
 		if len(dpTasks[idptask][idp]) <= (int(Tn)+1):
 			dp=[-1 for i in range(int(Tn)+1-len(dpTasks[idptask][idp]))]
 			dirt=[-1 for i in range(int(Tn)+1-len(dpTasks[idptask][idp]))]
-			#print dpTasks[idptask][incM]
-			#print dp
 			dpTasks[idptask][idp]=dpTasks[idptask][idp]+dp
 			dirtyBit[idptask][idp]=dirtyBit[idptask][idp]+dirt
 		
