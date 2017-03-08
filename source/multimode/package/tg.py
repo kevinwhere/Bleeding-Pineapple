@@ -35,7 +35,7 @@ maxCtune=1
 minCtune=0.75
 
 
-def	VRBSetGenerate(numMode,vRatio,scalefac):
+def	MMSetGenerate(numMode,vRatio,scalefac):
 	## a proportion of tasks is convented to multi-mode tasks	
 	numV=int(len(PSet)*vRatio)
 	i=0
@@ -89,6 +89,6 @@ def TaskGeneration(numTasks,uTotal,Pmin=1,numMode=5,vRatio=0.5,gscaleFac=1.5,num
 	## generate the task periods according to the log distribution
 	SetGenerate(Pmin,numLog)
 	## converted sporadic tasks to multi-mode tasks
-	VRBSetGenerate(numMode,vRatio,gscaleFac)
+	MMSetGenerate(numMode,vRatio,gscaleFac)
 	return VRBSet
 	

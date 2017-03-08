@@ -4,7 +4,9 @@ README v1.0 / 07 MARCH 2017
 
 We first generate a set of sporadic tasks. 
 The UUniFast method is adopted to generate a set of utilization values with the given goal.
-The task periods are generated according to the **exponential distribution**.
+The task periods are generated according to the **log-uniform distribution**[^1].
+[^1]: Schedulability test efficiency can be heavily dependent on the number of order of magnitude ranges of task periods (effectively the ratio between the smallest and largest task period). That bias can result if studies do not fully explore appropriate distributions of task periods. For example, choosing task periods at random according to a uniform distribution in the range $[1, 10^6]$ results in 99% of tasks having periods greater than $10^4$, thus the effective ratio of maximum to minimum task period is far less than might be expected (closer to $10^2$ than $10^6$ for small tasksets). To avoid these problems, a **log-uniform** distribution of task periods can be used, with tasksets generated for different ratios of the minimum (Tmin) to the maximum (Tmax) task period.
+
  The distribution of periods is by default within two orders of magnitude, i.e., $10$ms-$1000$ms. Task relative deadlines are implicit, i.e., $D_i=T_i$. The worst-case execution time is computed accordingly, i.e. $C_i~=T_iU_i$. We then convert a proportion $p$ of tasks to multi-mode tasks and the details are below:
 
 * A multi-mode task has $M$ execution modes
@@ -15,7 +17,7 @@ for j in range(numMode):
 * We use a scaling factor $s$ to assign the parameters of the other modes, i.e., $C_i^{m+1}=s^{m-1}C_i^{m}$ and $T_i^{m+1}=s^{m-1}T_i^{m}$. 
 ```python
 p=iStask['period']*math.pow(scalefac, j)
-c=iStask['period']*iStask['utilization']*math.pow(scalefac, j) 
+c=iStask['period']*iStask['utilizatichapter-1on']*math.pow(scalefac, j) 
 ```
 * We randomly choose a mode to have the largest utilization. 
 * The worst-case execution times of the remaining modes are adjusted by multiplying them by uniform random values in the range [minCtune,maxCtune].
@@ -26,17 +28,26 @@ if j != iMaxU:
 * To ensure the discrete time model, we here apply a correction factor on both the generated period and execution time.
 ```python
 s=math.ceil(p)/p
-pair['period']=math.ceil(p) 
+pair['period']=math.ceil(p)  
 pair['execution']=c*s
 ```
 
 | Built-in Functions |
 | ------------------- |
-| UUniFast(numTasks,uTotal)|
-|SetGenerate(Pmin,numLog)|
+| [UUniFast(n,u)](#uuni)|
+|[SetGenerate(Pmin,numLog)](#setgen)|
+|[MMSetGenerate(numMode,vRatio,gscaleFac)](#mmsetgen)|
 
+####<a id="uuni"></a>UUniFast(_n,u_)
+Uniformly generate a list of **n** values with a total value of **u**.
 
-## Data Structures
+#### <a id="setgen"></a>SetGenerate(_Pmin,numLog_)
+Generate a log-uniform distribution of periods, with **numLog** orders of magnitude and the minimum period of **Pmin**, operated on the task set generated from [UUniFast(n,u)](#uuni).
+
+#### <a id="mmsetgen"></a>MMSetGenerate(_numMode,vRatio,gscaleFac_)
+Convert a proportion **vRatio** of the genereated tasks to multi-mode tasks, each of which is with **numMode** modes and a scale factor of **gscaleFac**.
+
+## Data Structures (Tasks)
 *list*
 We use data type *dictionary* built into Python to decribe modes.
 
@@ -112,8 +123,7 @@ The bulk of the work in this function is done by the loop that starts on `for i 
 # Optimal Priority Assignment
 Checking the FPT feasibility of a multi-mode task set was achieved by using the **Audsley's Algorithm**, a.k.a. **Optimal Priority Assignment (OPA)**. Its source code for mode-level fixed-priority scheduling is attached below (the one for task-level FP scheduling is also similar): 
 
-```
-#!python
+```python
 
 def modeAudsley(tasks,scheme):
 	num_modes=0
