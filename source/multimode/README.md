@@ -30,6 +30,12 @@ pair['period']=math.ceil(p)
 pair['execution']=c*s
 ```
 
+| Built-in Functions |
+| ------------------- |
+| UUniFast(numTasks,uTotal)|
+|SetGenerate(Pmin,numLog)|
+
+
 ## Data Structures
 *list*
 We use data type *dictionary* built into Python to decribe modes.
@@ -106,7 +112,9 @@ The bulk of the work in this function is done by the loop that starts on `for i 
 # Optimal Priority Assignment
 Checking the FPT feasibility of a multi-mode task set was achieved by using the **Audsley's Algorithm**, a.k.a. **Optimal Priority Assignment (OPA)**. Its source code for mode-level fixed-priority scheduling is attached below (the one for task-level FP scheduling is also similar): 
 
-```python
+```
+#!python
+
 def modeAudsley(tasks,scheme):
 	num_modes=0
 	## to know how many priority levels we need to decide
