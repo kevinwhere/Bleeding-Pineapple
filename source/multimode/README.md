@@ -75,7 +75,8 @@ Available tests are below:
 
 
 ## Dynamic Programming 
-Suppose we are given a weight limit. 
+Suppose we are given a limit of total weight, and a set of items. Each item has its *weight (period)* and *profit (execution)*, and can be used unboundedly. What is the *largest* profit of items we can select.
+
 ```python
 def dp_recursive(t,dpTB,dirtTB,incM,idptask,tasks):
 	choice=[]
