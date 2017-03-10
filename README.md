@@ -54,10 +54,13 @@ $ python multimode.py
 Plot the results
 
 1. Change to the directory in which `multimode-plot.py` is put
+
 ```bash
 $ cd plot
 ```
+
 2. plot the result
+
 ```bash
 $ python multimode-plot.py
 ```

@@ -116,7 +116,7 @@ NOTE: [Gurobi 7.0](http://www.gurobi.com/products/whats-new/whats-new-in-the-lat
 The idea of *Big-M* method is to use a _binary_ variable to activate the contraint in `if` while neutralizing another in `else`, and vice versa, by associating the violation of a constaint with a large positive penalty constant *M*.
 
 For example, for a sufficiently large M and z binary variable (0 or 1), we can formulate the above logical constraints as follows:
-```r
+```python
 x-y<=Mz
 -x+y>-M(1-z)
 -2b-c<Mz
