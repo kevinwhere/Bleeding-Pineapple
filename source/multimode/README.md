@@ -1,4 +1,4 @@
-README v1.0 / 07 MARCH 2017
+README v1.0 / 08 MARCH 2017
 
 # Multi-Mode Tasks Generation
 
@@ -48,15 +48,23 @@ Generate a log-uniform distribution of periods, with **numLog** orders of magnit
 Convert a proportion **vRatio** of the genereated tasks to multi-mode tasks, each of which is with **numMode** modes and a scale factor of **gscaleFac**.
 
 ## Data Structures (Tasks)
-*list*
-We use data type *dictionary* built into Python to decribe modes.
+
+Each multi-mode task is composed of a set of modes. We use data type *dictionary* built into Python to decribe modes.
+
+| Object              		| Data Type                                     |
+| -------------------     | -----------------------------------------------       |
+| task           | _list_            |
+| mode           | _dictionary_             |
+
+
+The keywords of the dictionary and their meaning are below:
 
 | Keyword              		| Meaning                                     |
 | -------------------     | -----------------------------------------------       |
 | period           | the period/inter-arrival time of this mode             |
 | execution           | the worst-case execution time of this mode             |
 
-**NOTE: we implicitly assume implicit deadlines here, so we don't need deadlines to be specified. Alternaively, one can add deadline as keyword to decribe deadlines.**
+**NOTE: we implicitly assume implicit deadlines here, so we don't need deadlines to be specified. Alternaively, one can add deadline as keywords to decribe deadlines.**
 
 ### Example 
 ```python
@@ -92,7 +100,7 @@ Available tests are below:
 
 
 ## Dynamic Programming 
-Suppose we are given a limit of total weight, and a set of items. Each item has its *weight (period)* and *profit (execution)*, and can be used unboundedly. What is the *largest* profit of items we can select.
+Suppose we are given a limit of total weight, and a set of items. Each item has its *weight (period)* and *profit (execution)*, and can be used unboundedly. What is the *largest* profit of items we can select? This problem can be solved by using **dynamic programming (DP)**.
 
 ```python
 def dp_recursive(t,dpTB,dirtTB,incM,idptask,tasks):
@@ -158,4 +166,60 @@ def modeAudsley(tasks,scheme):
 		if canAssign==0:
 			return False
 	return True
+```
+
+# Plotting
+
+To genereate plots from our evaluations, we use [Matplotlib](http://matplotlib.org/ ""), a widely-used Python plotting library for 2D-graphics.
+
+
+### Create a virtual outer subsplot for putting big x-ylabel 
+
+To make the figures space-efficient and concise, what we typically did is to put several figures into one and leave out labels. This can be done by creating a virtual subsplot `fig.add_subplot`:
+
+```python
+ax=fig.add_subplot(111)
+fig.subplots_adjust(top=0.9,left=0.1,right=0.95,hspace =0.3)
+
+ax.set_xlabel(r'$U_{\Sigma }/M$',labelpad=-2,size=15)
+ax.set_ylabel('Acceptance Ratio',size=15)
+ax.spines['top'].set_color('none')
+ax.spines['bottom'].set_color('none')
+ax.spines['left'].set_color('none')
+ax.spines['right'].set_color('none')
+ax.tick_params(labelcolor='w', top='off', bottom='off', left='off', right='off')
+
+for iprocessor in modes:
+	for iplog in periodlogs:		
+			ax=fig.add_subplot(len(modes),len(periodlogs),i)
+```
+### You read what you store
+```python
+## multimode.py
+
+plotfile=prefixdata+"/m/"+imode+"/"+ischeme
+np.save(plotfile,np.array([x,y]))
+```
+
+```python
+## multimode-plot.py
+
+ifile=prefix+"m/"+iprocessor+"/"+schemes[j]+".npy"			
+data=np.load(ifile)
+```
+### Make the curves foregrounded  `clip_on=False`
+
+```python
+marker = [ '*','o','+','D','p','s']
+colors = ['k','y','c','k','k','y']
+
+ax.plot(x, y,
+ 		'-', 
+ 		color=colors[j],
+ 		marker=marker[j],
+ 		markersize=8,
+ 		markevery=1,
+ 		fillstyle='none',
+ 		label=name, 					
+ 		linewidth=1.0, clip_on=False)
 ```

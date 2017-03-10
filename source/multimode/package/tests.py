@@ -1,12 +1,8 @@
 from __future__ import division
 import math
 import sys
-maxmaxP=[]
-rfile=""
 
-selectUT=""
-mProc=1
-Cn=1
+
 
 
 def VRBL2(mode,Tasks):
