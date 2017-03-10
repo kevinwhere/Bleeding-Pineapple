@@ -101,7 +101,7 @@ theoretical optimal algorithm in the worst case.
 
 We use the state-of-the-art optimization solver [Gurobi](http://www.gurobi.com/index ""), for our optimization problem, where the problem was intuitively formulated with some _logical_ constraints, e.g.,   
 
-```r
+```
 if x-y <=0: then 2b+c>0
 else: 3b+2c<5
 ```
@@ -116,7 +116,7 @@ NOTE: [Gurobi 7.0](http://www.gurobi.com/products/whats-new/whats-new-in-the-lat
 The idea of *Big-M* method is to use a _binary_ variable to activate the contraint in `if` while neutralizing another in `else`, and vice versa, by associating the violation of a constaint with a large positive penalty constant *M*.
 
 For example, for a sufficiently large M and z binary variable (0 or 1), we can formulate the above logical constraints as follows:
-```python
+```
 x-y<=Mz
 -x+y>-M(1-z)
 -2b-c<Mz
