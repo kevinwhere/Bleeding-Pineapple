@@ -1,7 +1,7 @@
 from __future__ import division
 import random
 import math
-import tests
+import QT,DP
 
 def modeAudsley(tasks,scheme):
 
@@ -45,7 +45,7 @@ def modeAudsley(tasks,scheme):
 
 def Audsley(tasks,scheme):
 	if scheme == 'DT-FPT':
-		table_init(tasks)
+		DP.table_init(tasks)
 	
 
 	#Optimal Priority Assignment
@@ -82,16 +82,15 @@ def Audsley(tasks,scheme):
 				Tn=imode['period']
 				Un=imode['execution']/imode['period']
 				if scheme == 'QT-FPT':
-
-					if tests.QT(imode,primeTasks) == False:
+					if QT.QT(imode,primeTasks) == False:
 						canAssign=0
 						break
 				elif scheme == 'VRBL2-FPT':
-					if tests.VRBL2(imode,primeTasks) == False:
+					if QT.VRBL2(imode,primeTasks) == False:
 						canAssign=0
 						break
 				elif scheme == 'DT-FPT':
-					if tests.DTest(i,tasks,imode,priortyassigned) == False:
+					if DP.DTest(i,tasks,imode,priortyassigned) == False:
 						canAssign=0
 						break				
 				else:

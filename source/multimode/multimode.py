@@ -1,7 +1,7 @@
 from __future__ import division
 import sys
 import numpy as np
-from package import tg, OPA, tests
+from package import tg, OPA, QT,DP
 #from datetime import datetime, timedelta
 
 totBucket=100
@@ -17,7 +17,7 @@ prefixdata="plot/data"
 
 ###### schemes=['DT-FPT','VRBL2-FPT','QT-FPT','OUR-LP','Guan']
 
-schemes=['QT-RM']
+schemes=['DT-FPT']
 ######  modes=['2','4','8']
 modes=['5','8','10']
 ######periodlogs=['1','2','3']
@@ -50,7 +50,7 @@ for ischeme in schemes:
 							if OPA.modeAudsley(tasks,ischeme) == False:
 								numfail+=1
 						elif ischeme == 'QT-RM':
-							if tests.RMQT(tasks,ischeme) == False:
+							if QT.RMQT(tasks,ischeme) == False:
 								numfail+=1
 						elif ischeme == 'QT-FPT':
 							if OPA.Audsley(tasks,ischeme) == False:

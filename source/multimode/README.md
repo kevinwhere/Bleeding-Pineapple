@@ -7,7 +7,7 @@ The UUniFast method is adopted to generate a set of utilization values with the 
 The task periods are generated according to the **log-uniform distribution**[^1].
 [^1]: Schedulability test efficiency can be heavily dependent on the number of order of magnitude ranges of task periods (effectively the ratio between the smallest and largest task period). That bias can result if studies do not fully explore appropriate distributions of task periods. For example, choosing task periods at random according to a uniform distribution in the range $[1, 10^6]$ results in 99% of tasks having periods greater than $10^4$, thus the effective ratio of maximum to minimum task period is far less than might be expected (closer to $10^2$ than $10^6$ for small tasksets). To avoid these problems, a **log-uniform** distribution of task periods can be used, with tasksets generated for different ratios of the minimum (Tmin) to the maximum (Tmax) task period.
 
- The distribution of periods is by default within two orders of magnitude, i.e., $10$ms-$1000$ms. Task relative deadlines are implicit, i.e., $D_i=T_i$. The worst-case execution time is computed accordingly, i.e. $C_i~=T_iU_i$. We then convert a proportion $p$ of tasks to multi-mode tasks and the details are below:
+ The distribution of periods is by default within two orders of magnitude, i.e., $10$ms-$1000$ms. Task relative deadlines are implicit, i.e., $D_i=T_i$. The worst-case execution time is computed accordingly, i.e. $C_i=T_iU_i$. We then convert a proportion $p$ of tasks to multi-mode tasks and the details are below:
 
 * A multi-mode task has $M$ execution modes
 ```python
@@ -129,7 +129,7 @@ def dp_recursive(t,dpTB,dirtTB,incM,idptask,tasks):
 The bulk of the work in this function is done by the loop that starts on `for i in range(incM):`.
 
 # Optimal Priority Assignment
-Checking the FPT feasibility of a multi-mode task set was achieved by using the **Audsley's Algorithm**, a.k.a. **Optimal Priority Assignment (OPA)**. Its source code for mode-level fixed-priority scheduling is attached below (the one for task-level FP scheduling is also similar): 
+Checking the FPT feasibility of a multi-mode task set was achieved by using the **Audsley's Algorithm**, a.k.a. **Optimal Priority Assignment (OPA)**. The QT under FPM is compatible with the OPA. Its source code for mode-level fixed-priority scheduling is attached below (the one for FPT scheduling is also similar): 
 
 ```python
 
