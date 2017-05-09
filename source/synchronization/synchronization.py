@@ -54,7 +54,7 @@ for ischeme in schemes:
 									continue
 	
 								tasks=tg.taskGeneration_p(tasksinBkt*int(iprocessor),percentageU,seed=i,numLog=int(iplog),Ratio=int(iratio),sstype=isstype,totRes=int(inumQ),maxUsdQ=int(maxUsdQ[0]))
-								
+								print tasks
 								#print c.microseconds, "ms",
 								# fi = open('taskset', "r")
 								# tasks= json.load(fi)

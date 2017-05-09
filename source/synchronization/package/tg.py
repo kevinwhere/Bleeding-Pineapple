@@ -153,6 +153,7 @@ def	CSet_generate(Pmin,numLog):
 		pair['ncriutilization']=i
 		pair['period']=p
 		pair['execution']=i*p
+		## in the case the program is structured to one path 
 		pair['C']=seg_UUniFast(2,pair['execution'])
 		PSet.append(pair)
 		j=j+1;
@@ -170,6 +171,7 @@ def SSS_generate(ssU,n,maxUsdRes,numCritical):
 		nextSumU=0
 		for i in range(n-1):
 			nextSumU=sumU*math.pow(random.random(), 1/(n-i))
+			## ensure C_i+A_i<=1
 			if (sumU-nextSumU)+	PSet[i]['ncriutilization'] >1:
 				restart=1				
 				break
@@ -202,24 +204,14 @@ def AAA_generate(totRes,maxUsdRes,numCritical):
 	global PSet
 	n=maxUsdRes
 	for itask in PSet:
-
-		SS=[]
-
-		sumU=itask['accUtilization']
 		
-		#print sumU
-		nextSumU=0
-		for i in range(n-1):
-			nextSumU=sumU*math.pow(random.random(), 1/(n-i))
-			SS.append(sumU-nextSumU)
-			sumU=nextSumU
-		SS.append(sumU)
+		SS=seg_UUniFast(n,itask['accUtilization'])
 		resAcc=[]
 		for i in range(totRes):
 			q={}
 			q['totacc']=0
 			resAcc.append(q)
-		
+		# determine which of shared resources this task may access
 		X=random.sample(xrange(totRes), maxUsdRes)		
 		itask['resEdge']=X
 		j=0
