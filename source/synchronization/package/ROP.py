@@ -97,7 +97,7 @@ def FRDEDF(task,HPTasks,scheme):
 				d1=d1-1
 		else:
 			return True	
-
+			
 		if TerminationCheck(task,search_scheme,d1):
 			return False
 def GMFWorkload(itask,R):
@@ -138,6 +138,7 @@ def FRDFP_RTA_mix(C,D,HPTasks,Theta,PrimeTasks):
 			return R
 def FRDFP(task,HPTasks,ifmix,Theta=[],PrimeTasks=[]):
 	WCRT=[]
+	## get upper bounds on WCRT of each segment 
 	for iC in task['C']:
 		if ifmix == False:
 			WCRT.append(FRDFP_RTA(iC,task['period'],HPTasks))
@@ -148,6 +149,8 @@ def FRDFP(task,HPTasks,ifmix,Theta=[],PrimeTasks=[]):
 		#print task['S'], WCRT,task['period']
 		return False
 	else:
+		## set subjobs' deadlines
+		## the second takes all 
 		WCRT[1]=task['period']-task['S']-WCRT[0]
 		task['D']=WCRT
 		return True
@@ -299,6 +302,8 @@ def RAM(tasks,M,Thetas,scheme,numQ):
 
 	procs=[]
 	other=[]
+	## sort tasks in order of decreasing priorities
+	## Deadline-Monotonic, Slack-Laxiety-Monotonic 
 	for i in range(int(M)):
 		proc=[]
 		procs.append(proc)
@@ -309,19 +314,21 @@ def RAM(tasks,M,Thetas,scheme,numQ):
 	else:
 		print "Oops!"
 		sys.exit()
+
 	syncprocs=[]
 	for i in range(len(Thetas)):					
 		syncprocs.append([])
 	
-
 
 	for i in range(len(sortedTasks)):
 		HPTasks=sortedTasks[:i]
 		LPTasks=sortedTasks[i+1:]
 		if scheme.split("-")[2] == "FF":
 			# if FirstFitDPCP(sortedTasks[i],procs,HPTasks,LPTasks,Thetas,scheme)== False:
-			# 	return False			
-			if FirstFit(sortedTasks[i],procs,HPTasks,LPTasks,Thetas,scheme)== False:				
+			# 	return False
+			## Try application processor first
+			if FirstFit(sortedTasks[i],procs,HPTasks,LPTasks,Thetas,scheme)== False:
+				## Try schronization processor 			
 				if FirstFit_SyncProc(sortedTasks[i],syncprocs,HPTasks,LPTasks,Thetas,scheme)== False:
 					return False
 		else :
@@ -334,6 +341,7 @@ def RAM(tasks,M,Thetas,scheme,numQ):
 		
 
 	return True
+# set up priority ceiling table
 def setPCP(tasks,numQ):
 
 	for q in range(numQ):
@@ -349,6 +357,7 @@ def setPCP(tasks,numQ):
 def WFD(LOADA,Thetas):
 
 	#numNC=0
+	## sort resources in order of non-increasing utilizations
 	sortedLOADA=sorted(LOADA, key=lambda item:item['utilization'],reverse=True)
 	table={}
 	for i in sortedLOADA:
@@ -366,11 +375,13 @@ def WFD(LOADA,Thetas):
 
 	
 		minSumProc.append(i['which'])
-def ReasonableAllocation(tasks,M,scheme,numQ):
 
+## ROP
+def ReasonableAllocation(tasks,M,scheme,numQ):
 	
 	LOADA=[]
 	
+	## calculate the total utilization on each shared resource 
 	for i in range(numQ):
 		t=0
 		for itask in tasks:
@@ -384,16 +395,18 @@ def ReasonableAllocation(tasks,M,scheme,numQ):
 	for m in range(1,min(M,numQ)):
 		
 		Thetas=[[]for j in range(m)]
-		
+
+		# Worst-Fit Decreasing
 		WFD(LOADA,Thetas)
 		
+		# Set priority ceiling if PCP is used
 		if scheme.split("-")[1] == "PCP" or scheme.split("-")[1] == "DPCP":
 			setPCP(tasks,numQ)
-
+		# Set max suspension time if period enforcement is used
 		if scheme.split("-")[0] == "FRDFP" or scheme.split("-")[0].split("=")[0] == "FRDEDF":
 			if calMaxSusp(tasks,Thetas,scheme) == False:
 				continue
-
+		# task allocation
 		if RAM(tasks,M-m,Thetas,scheme,numQ) == True:			
 			return True
 

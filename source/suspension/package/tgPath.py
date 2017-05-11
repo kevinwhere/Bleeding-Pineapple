@@ -118,20 +118,24 @@ def SSS_seg_gen(vRatio,minCtune,maxCtune,maxnumsegs,minSratio,numpaths,scalef):
 			itask["paths"]=[]
 			itask["Cseg"]=[]
 			itask["Sseg"]=[]
+			#the path with the maximum C
+			#the path with the maximum S
 			iMaxE=random.randrange(numpaths)
 			iMaxS=random.randrange(numpaths)
 			maxSumC=0
 			maxSumS=0
+			#generate each path
 			for j in range(numpaths):
 				
 
 				path={}
+
 				if j!=iMaxE:
 					path["Cseg"]=seg_UUniFast(maxnumsegs,itask['execution']*random.uniform(scalef,1))
 				else:
 					path["Cseg"]=seg_UUniFast(maxnumsegs,itask['execution'])	
 
-				if j!=iMaxS:		
+				if j!=iMaxS:
 					path["Sseg"]=seg_UUniFast(maxnumsegs-1,itask['sslength']*random.uniform(scalef,1))
 				else:
 					path["Sseg"]=seg_UUniFast(maxnumsegs-1,itask['sslength'])
