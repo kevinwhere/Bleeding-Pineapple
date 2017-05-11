@@ -39,13 +39,13 @@ pair['execution']=c*s
 |[MMSetGenerate(numMode,vRatio,gscaleFac)](#mmsetgen)|
 
 ####<a id="uuni"></a>UUniFast(_n,u_)
-Uniformly generate a list of **n** values with a total value of **u**.
+Uniformly generate a list of #**n** values with a total value of **u**.
 
 #### <a id="setgen"></a>SetGenerate(_Pmin,numLog_)
-Generate a log-uniform distribution of periods, with **numLog** orders of magnitude and the minimum period of **Pmin**, operated on the task set generated from [UUniFast(n,u)](#uuni).
+Generate a log-uniform distribution of periods, with #**numLog** orders of magnitude and the minimum period of **Pmin**, operated on the task set generated from [UUniFast(n,u)](#uuni).
 
 #### <a id="mmsetgen"></a>MMSetGenerate(_numMode,vRatio,gscaleFac_)
-Convert a proportion **vRatio** of the genereated tasks to multi-mode tasks, each of which is with **numMode** modes and a scale factor of **gscaleFac**.
+Convert a proportion **vRatio** of the genereated tasks to multi-mode tasks, each of which is with #**numMode** modes and a scale factor of **gscaleFac**.
 
 ## Data Structures (Tasks)
 

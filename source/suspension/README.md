@@ -38,16 +38,16 @@ itask["Cseg"]=seg_UUniFast(maxnumsegs,itask['execution'])
 
 	
 ####<a id="uuni"></a>UUniFast(_n,u_)
-Uniformly generate a list of **n** values with a total value of **u**.
+Uniformly generate a list of #**n** values with a total value of **u**.
 
 ####<a id="seguuni"></a>segUUniFast(_n,u_)
-Return a list of **n** values with a total value of **u** in a uniform distribution.
+Return a list of #**n** values with a total value of **u** in a uniform distribution.
 
 #### <a id="setgen"></a>SetGenerate(_Pmin,numLog_)
-Generate a log-uniform distribution of periods, with **numLog** orders of magnitude and the minimum period of **Pmin**, operated on the task set generated from [UUniFast(n,u)](#uuni).
+Generate a log-uniform distribution of periods, with #**numLog** orders of magnitude and the minimum period of **Pmin**, operated on the task set generated from [UUniFast(n,u)](#uuni).
 
 #### <a id="sssetgen"></a>SSSetGenerate(vRatio,minCtune,maxCtune,numsegs)
-Convert a proportion **vRatio** of the genereated tasks to suspension tasks, each of which is with **numsegs** computation segments, and each of whose suspension length is drawn by **minCtune** and **maxCtune**, depending on which type of suspensions it is.
+Convert a proportion **vRatio** of the genereated tasks to suspension tasks, each of which is with #**numsegs** computation segments, and each of whose suspension length is drawn by **minCtune** and **maxCtune**, depending on which type of suspensions it is.
 
 ## Data Structures (Tasks)
 
