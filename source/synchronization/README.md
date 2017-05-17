@@ -1,4 +1,4 @@
-README v1.0 / 09 MAY 2017
+README v1.0 / 17 MAY 2017
 
 # Synchronization Tasks Generation
 
@@ -105,7 +105,7 @@ Available tests are below:
 
 * MPCP `MPCP.MPCP(tasks,scheme)`: the Multiprocessor Priority Ceiling Protocol
 (MPCP) along with the SPA.
-* PCP-ROP-FF-RM `ROP.ReasonableAllocation(tasks)`: the Resource-Oriented Protocol using PCP
+* ROP-PCP-FF-RM `ROP.ReasonableAllocation(tasks)`: the Resource-Oriented Protocol using PCP
 
 * FRDFP-PCP-FF-SLM `ROP.ReasonableAllocation(tasks)`: ROP using Period Enforcement, FP on each application processor
 
