@@ -122,8 +122,6 @@ To genereate plots from our evaluations, we use [Matplotlib](http://matplotlib.o
 
 # Parallel Version Using Joblib 
 
-
-
 ```
 
 from joblib import Parallel, delayed
@@ -138,6 +136,7 @@ num_cores = multiprocessing.cpu_count()
 results = Parallel(n_jobs=num_cores)(delayed(processInput)(i) for i in inputs)
 ```
 https://blog.dominodatalab.com/simple-parallelization/
+http://stsievert.com/blog/2014/07/30/simple-python-parallelism/
 
 | Scheme         | serial time (s)       	  | parallel time (s)      	  | Speedup       	  |
 | -------------  | -------------------|-------------------|------------------|
