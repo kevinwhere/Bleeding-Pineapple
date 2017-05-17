@@ -250,12 +250,13 @@ def FirstFit(task,procs,HPTasks,LPTasks,Thetas,scheme):
 
 def getBk(task,LPTasks,iTheta,scheme):
 	Bk=0
+
 	for itask in LPTasks:
 		for iq in iTheta:
 			if iq in itask['resEdge']:						
 				if scheme.split("-")[1] == 'NPP':
 					Bk=max(Bk,itask['resGraph'][iq]['maxacc'])
-				elif scheme.split("-")[1] == 'PCP':
+				elif scheme.split("-")[1] == 'PCP':					
 					if itask['resGraph'][iq]['PCPPrio']<=task['resGraph'][iq]['basePrio']:
 						Bk=max(Bk,itask['resGraph'][iq]['maxacc'])
 				else:
@@ -343,17 +344,17 @@ def RAM(tasks,M,Thetas,scheme,numQ):
 	return True
 # set up priority ceiling table
 def setPCP(tasks,numQ):
-
+	sortedTasks=sorted(tasks, key=lambda item:item['period'])
 	for q in range(numQ):
 		highestP=-1
-		for j in range(len(tasks)):
-			if tasks[j]['resGraph'][q]['totacc']!=0:
+		for j in range(len(sortedTasks)):
+			if sortedTasks[j]['resGraph'][q]['totacc']!=0:
 				highestP=j
 				break
-		for j in range(len(tasks)):
-			tasks[j]['resGraph'][q]['basePrio']=j
-			if tasks[j]['resGraph'][q]['totacc']!=0:
-				tasks[j]['resGraph'][q]['PCPPrio']=highestP
+		for j in range(len(sortedTasks)):
+			sortedTasks[j]['resGraph'][q]['basePrio']=j
+			if sortedTasks[j]['resGraph'][q]['totacc']!=0:
+				sortedTasks[j]['resGraph'][q]['PCPPrio']=highestP
 def WFD(LOADA,Thetas):
 
 	#numNC=0

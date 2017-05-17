@@ -120,4 +120,27 @@ Available tests are below:
 
 To genereate plots from our evaluations, we use [Matplotlib](http://matplotlib.org/ ""), a widely-used Python plotting library for 2D-graphics.
 
+# Parallel Version Using Joblib 
+
+
+
+```
+
+from joblib import Parallel, delayed
+import multiprocessing
+inputs = range(10)
+
+def processInput(i):
+    return i * i
+
+num_cores = multiprocessing.cpu_count()
+
+results = Parallel(n_jobs=num_cores)(delayed(processInput)(i) for i in inputs)
+```
+https://blog.dominodatalab.com/simple-parallelization/
+
+| Scheme         | serial time (s)       	  | parallel time (s)      	  | Speedup       	  |
+| -------------  | -------------------|-------------------|------------------|
+| FRDFP-PCP-FF-SLM          | 79             | 42             |1.88             |
+
 
