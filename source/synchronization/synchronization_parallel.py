@@ -19,10 +19,10 @@ prefix="tmp/"
 prefixdata="plot/data"
 
 sstype= ['R']
-#schemes=['PCP-FRDEDF=PBminD=2-FF-SLM']
+#schemes=['FRDEDF=PBminD=2-PCP-FF-SLM']
 #'PCP-ROP-FF-RM'
-#'PIP','MrsP','MPCP','PCP-ROP-FF-RM','PCP-FRDFP-FF-SLM','NPP-FRDFP-FF-SLM','NPP-FRDEDF=PBminD=2-FF-SLM','PCP-FRDEDF=PBminD=2-FF-SLM','NPDBF'
-schemes=['FRDFP-PCP-FF-SLM']
+#'PIP','MrsP','MPCP','PCP-ROP-FF-RM','PCP-FRDFP-FF-SLM','NPP-FRDFP-FF-SLM','FRDEDF=PBminD=2-NPP-FF-SLM','FRDEDF=PBminD=2-PCP-FF-SLM','NPDBF'
+schemes=['FRDEDF=PBminD=2-PCP-FF-SLM']
 ratio=['10']
 periodlogs=['1']
 maxUsdQ=['1']

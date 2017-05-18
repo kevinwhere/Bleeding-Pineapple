@@ -141,5 +141,6 @@ http://stsievert.com/blog/2014/07/30/simple-python-parallelism/
 | Scheme         | serial time (s)       	  | parallel time (s)      	  | Speedup       	  |
 | -------------  | -------------------|-------------------|------------------|
 | FRDFP-PCP-FF-SLM          | 79             | 42             |1.88             |
+| FRDEDF=PBminD=2-PCP-FF-SLM          | 1110             | 1608             |1.44             |
 
 
